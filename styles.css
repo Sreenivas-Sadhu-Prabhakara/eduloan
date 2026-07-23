@@ -13,10 +13,10 @@
   --muted:     #C2CDBB;
   --gold:      #E6D28E;                    /* pale champagne gold */
   --brass:     #C4A44E;
-  --sage:      #8FA79A;                    /* Scenario A baseline only */
+  --sage:      #A2BAAD;                    /* Scenario A baseline only (AA on its dim chip) */
   --copper:    #E0A96D;                    /* Scenario C */
   --gold-dim:  rgba(230, 210, 142, 0.13);
-  --sage-dim:  rgba(143, 167, 154, 0.14);
+  --sage-dim:  rgba(162, 186, 173, 0.14);
   --copper-dim:rgba(224, 169, 109, 0.13);
   --focus:     #E6D28E;
 
@@ -35,11 +35,11 @@
     --line:      rgba(126, 100, 20, 0.35);
     --ink:       #123A2C;                  /* bottle-green ink */
     --muted:     #40584A;
-    --gold:      #7E6414;                  /* brass deepened for AA on light */
+    --gold:      #755D10;                  /* brass deepened for AA on light (incl. gold-dim chips) */
     --brass:     #8A6E1F;
     --sage:      #4E6A5C;
     --copper:    #8A501B;
-    --gold-dim:  rgba(126, 100, 20, 0.10);
+    --gold-dim:  rgba(117, 93, 16, 0.10);
     --sage-dim:  rgba(78, 106, 92, 0.11);
     --copper-dim:rgba(138, 80, 27, 0.10);
     --focus:     #123A2C;
