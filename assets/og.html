@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  /* Rendered locally to og-image.png (1200×630) — never served under the CSP. */
+  :root {
+    --bg: #0B2B21; --panel: #113828; --ink: #EFEAD9; --muted: #C2CDBB;
+    --gold: #E6D28E; --brass: #C4A44E; --sage: #8FA79A; --copper: #E0A96D;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    background: linear-gradient(180deg, #0a2820 0%, #0B2B21 62%, #0d3125 100%);
+    font-family: var(--sans); color: var(--ink); -webkit-font-smoothing: antialiased;
+    position: relative;
+  }
+  .wedge-stage { position: absolute; inset: 0; }
+  .frame { position: absolute; inset: 0; padding: 64px 74px; display: flex; flex-direction: column; justify-content: space-between; }
+  .brand { display: flex; align-items: center; gap: 18px; }
+  .mark { width: 64px; height: 64px; border-radius: 15px; background: #0a241b; border: 1.5px solid rgba(196,164,78,0.5); display: grid; place-items: center; }
+  .wordmark { font-size: 54px; font-weight: 800; letter-spacing: -0.03em; }
+  .wordmark .edu { color: var(--gold); }
+  .headline { max-width: 760px; }
+  .headline h1 { font-size: 47px; font-weight: 800; letter-spacing: -0.025em; line-height: 1.14; }
+  .headline h1 em { font-style: normal; color: var(--gold); }
+  .headline p { margin-top: 18px; font-size: 25px; color: var(--muted); line-height: 1.4; max-width: 30ch; }
+  .chips { display: flex; gap: 12px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 9px; padding: 10px 18px;
+    border: 1.5px solid rgba(196,164,78,0.45); border-radius: 999px;
+    background: rgba(10,33,26,0.55); font-size: 19px; font-weight: 650; color: var(--ink);
+  }
+  .chip .sw { width: 26px; height: 0; border-top: 4px solid; border-radius: 2px; }
+  .sw-a { border-color: var(--sage); border-top-style: solid; }
+  .sw-b { border-color: var(--gold); border-top-style: dashed; }
+  .sw-c { border-color: var(--copper); border-top-style: dotted; }
+</style>
+</head>
+<body>
+  <!-- one large moratorium wedge with the three exit paths -->
+  <svg class="wedge-stage" width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <pattern id="hatch" width="16" height="16" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+        <line x1="0" y1="0" x2="0" y2="16" stroke="#C4A44E" stroke-width="3" opacity="0.55"/>
+      </pattern>
+    </defs>
+    <!-- baseline -->
+    <line x1="60" y1="560" x2="1150" y2="560" stroke="#C4A44E" stroke-width="3" opacity="0.85"/>
+    <!-- the wedge: interest accruing while nobody pays -->
+    <polygon points="480,560 830,560 830,300 480,505" fill="url(#hatch)"/>
+    <!-- capitalisation tick -->
+    <rect x="830" y="258" width="16" height="302" fill="#E6D28E"/>
+    <!-- three exit paths -->
+    <path d="M846 268 C 950 320, 1050 460, 1140 556" fill="none" stroke="#8FA79A" stroke-width="6"/>
+    <path d="M846 400 C 950 440, 1040 510, 1130 558" fill="none" stroke="#E6D28E" stroke-width="6" stroke-dasharray="14 9"/>
+    <path d="M846 340 C 950 390, 1045 490, 1135 557" fill="none" stroke="#E0A96D" stroke-width="6" stroke-dasharray="4 8 16 8"/>
+  </svg>
+
+  <div class="frame">
+    <div class="brand">
+      <div class="mark">
+        <svg width="40" height="40" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="8,50 42,50 42,22 8,44" fill="#C4A44E" opacity="0.6"/>
+          <rect x="42" y="14" width="5" height="36" fill="#E6D28E"/>
+          <line x1="6" y1="50" x2="56" y2="50" stroke="#E6D28E" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="wordmark"><span class="edu">edu</span>loan</div>
+    </div>
+
+    <div class="headline">
+      <h1>The education-loan EMI calculator that <em>models the moratorium</em>.</h1>
+      <p>Pay nothing, pay interest, or pay a little during study — compared to the paisa, on your device.</p>
+    </div>
+
+    <div class="chips">
+      <span class="chip"><span class="sw sw-a"></span>Full moratorium</span>
+      <span class="chip"><span class="sw sw-b"></span>Interest served</span>
+      <span class="chip"><span class="sw sw-c"></span>Partial ₹/mo</span>
+    </div>
+  </div>
+</body>
+</html>

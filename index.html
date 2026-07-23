@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'none'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'">
+  <title>eduloan — education loan EMI calculator with the moratorium modelled</title>
+  <meta name="description" content="Education loan EMI calculator that models the moratorium: pay nothing, pay interest, or pay a little during study — compared to the paisa, with the IBA scheme, Section 80E and CSIS cited. Runs entirely in your browser.">
+  <meta name="color-scheme" content="dark light">
+  <link rel="canonical" href="https://sreenivas-sadhu-prabhakara.github.io/eduloan/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="author" content="Sreenivas Sadhu Prabhakara">
+  <meta name="keywords" content="education loan emi calculator, education loan moratorium calculator, moratorium period education loan, pay interest during moratorium, IBA model education loan scheme, section 80E education loan interest, CSIS interest subsidy, student loan EMI India, education loan interest calculator">
+  <meta name="theme-color" content="#0B2B21" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#F0F3EB" media="(prefers-color-scheme: light)">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="eduloan">
+  <meta property="og:title" content="eduloan — education loan EMI calculator with the moratorium modelled">
+  <meta property="og:description" content="Pay nothing, pay interest, or pay a little during study — the three moratorium choices compared to the paisa, entirely on your device.">
+  <meta property="og:url" content="https://sreenivas-sadhu-prabhakara.github.io/eduloan/">
+  <meta property="og:locale" content="en_IN">
+  <meta property="og:image" content="https://sreenivas-sadhu-prabhakara.github.io/eduloan/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="eduloan — the moratorium wedge: interest accruing while nobody pays, and the three ways out">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="eduloan — education loan EMI calculator with the moratorium modelled">
+  <meta name="twitter:description" content="Pay nothing, pay interest, or pay a little during study — the three moratorium choices compared to the paisa, entirely on your device.">
+  <meta name="twitter:image" content="https://sreenivas-sadhu-prabhakara.github.io/eduloan/og-image.png">
+  <meta name="twitter:image:alt" content="eduloan — the moratorium wedge: interest accruing while nobody pays, and the three ways out">
+
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <!-- Structured data (data blocks; not executable script) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "eduloan",
+    "description": "An education-loan EMI calculator that models the moratorium: simple interest accruing through course + 12 months per the cited IBA model scheme, then EMI on the capitalised balance — with full-moratorium, interest-served and partial-payment scenarios compared to the paisa.",
+    "url": "https://sreenivas-sadhu-prabhakara.github.io/eduloan/",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any (modern web browser)",
+    "browserRequirements": "Requires a modern web browser with JavaScript enabled.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+    "license": "https://opensource.org/licenses/MIT",
+    "author": { "@type": "Person", "name": "Sreenivas Sadhu Prabhakara" },
+    "softwareVersion": "0.1.0",
+    "featureList": [
+      "Moratorium engine: simple interest through course + 12 months per the IBA model scheme, with a monthly-compounding toggle",
+      "Three-scenario comparison: full moratorium vs interest served vs partial payments, to the paisa",
+      "Month-by-month schedule per scenario with per-financial-year interest subtotals",
+      "Section 80E card with the verbatim statute and your interest-paid figures",
+      "CSIS eligibility checklist with cited scheme figures",
+      "Named scenarios saved locally; print comparison sheet and RFC-4180 CSV export",
+      "Runs 100% offline — the CSP blocks every network request"
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the moratorium period on an education loan?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Under the IBA Model Education Loan Scheme the repayment holiday (moratorium) is the course period plus one year. Simple interest accrues during it; at the start of repayment the accrued interest is added to the principal and the EMI is set on that total. Banks may apply their own variations, so confirm with your sanction letter."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Should I pay interest during the education-loan moratorium?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Servicing interest during study keeps the balance from growing, so the EMI is set on the original principal instead of a capitalised total — on a ₹10 lakh loan at 10% with a 5-year moratorium the difference in total outflow runs into lakhs. eduloan computes the exact delta for your numbers; whether the cash is better used elsewhere is a decision for you and your bank."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does eduloan calculate my Section 80E tax saving?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No — deliberately. Section 80E deducts the interest you actually pay, and the saving depends on your slab and regime. eduloan shows the verbatim statute and your per-financial-year interest-paid figures — the number an 80E claim is based on — and stops there. It is not tax advice."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my loan data private? Does eduloan work offline?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. eduloan runs entirely in your browser and its Content-Security-Policy (connect-src 'none') makes the browser itself block any network request — your figures cannot leave the page. Saved scenarios live only in this browser's localStorage."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#calc">Skip to the calculator</a>
+
+  <!-- ============ HERO ============ -->
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Education loans &middot; moratorium modelled &middot; offline &amp; private</p>
+      <h1>Education Loan EMI Calculator with Moratorium — <span class="accent">Full Moratorium vs Paying Interest During Study</span></h1>
+      <p class="lede">
+        Generic EMI tools skip the years when interest quietly accrues and nobody pays.
+        eduloan models the moratorium the way the cited IBA model scheme describes it — simple interest
+        through course&nbsp;+&nbsp;12&nbsp;months, then EMI on the capitalised balance — and compares
+        <strong>pay nothing</strong>, <strong>pay the interest</strong>, and <strong>pay a little</strong> to the paisa.
+      </p>
+      <p class="privacy-chip"><span class="dot" aria-hidden="true"></span><span>Your loan never leaves this browser — the page's security policy (<code>connect-src 'none'</code>) makes the browser itself block any send. Enforced, not promised.</span></p>
+    </div>
+    <div class="hero-wedge" aria-hidden="true">
+      <svg viewBox="0 0 1200 120" preserveAspectRatio="none" role="presentation">
+        <defs>
+          <pattern id="hatchHero" width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+            <line x1="0" y1="0" x2="0" y2="8" stroke="#C4A44E" stroke-width="1.4" opacity="0.55"/>
+          </pattern>
+        </defs>
+        <polygon points="0,118 840,118 840,38 0,102" fill="url(#hatchHero)"/>
+        <rect x="840" y="20" width="10" height="98" fill="#E6D28E" opacity="0.9"/>
+        <path d="M850 30 C 990 40, 1100 80, 1200 112" fill="none" stroke="#8FA79A" stroke-width="3" stroke-dasharray="7 6"/>
+        <line x1="0" y1="118" x2="1200" y2="118" stroke="#C4A44E" stroke-width="1.5" opacity="0.7"/>
+      </svg>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ INPUTS ============ -->
+    <section id="calc" class="wrap" aria-labelledby="calc-h">
+      <h2 id="calc-h"><span class="rule-wedge" aria-hidden="true"></span>Your loan</h2>
+      <form id="loan-form" class="panel form-grid" autocomplete="off">
+        <div class="field">
+          <label for="in-amount">Sanctioned amount (₹)</label>
+          <input id="in-amount" name="amount" type="number" inputmode="numeric" min="10000" max="100000000" step="1000" value="1000000" required>
+        </div>
+        <div class="field">
+          <label for="in-rate">Interest rate (% per annum)</label>
+          <input id="in-rate" name="rate" type="number" inputmode="decimal" min="0" max="24" step="0.05" value="10" required>
+        </div>
+        <div class="field">
+          <label for="in-course">Course length (months)</label>
+          <input id="in-course" name="course" type="number" inputmode="numeric" min="1" max="120" step="1" value="48" required>
+        </div>
+        <div class="field">
+          <label for="in-tail">Moratorium tail after course (months)</label>
+          <input id="in-tail" name="tail" type="number" inputmode="numeric" min="0" max="36" step="1" value="12" required>
+          <p class="hint" id="tail-hint">Default 12 — the cited IBA model scheme's course period + 1 year.</p>
+        </div>
+        <div class="field">
+          <label for="in-tenure">Repayment tenure (years, up to 15)</label>
+          <input id="in-tenure" name="tenure" type="number" inputmode="numeric" min="1" max="15" step="1" value="10" required>
+        </div>
+        <div class="field">
+          <label for="in-start">Course start month</label>
+          <input id="in-start" name="start" type="month" value="2026-08" required>
+          <p class="hint">Anchors the financial-year (April–March) interest subtotals.</p>
+        </div>
+        <div class="field">
+          <label for="in-disburse">Disbursement</label>
+          <select id="in-disburse" name="disburse">
+            <option value="lump" selected>Lump sum at month 0</option>
+            <option value="yearly">Equal yearly tranches</option>
+            <option value="semester">Equal semester tranches</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="in-partial">Scenario C: partial payment (₹ per month)</label>
+          <input id="in-partial" name="partial" type="number" inputmode="numeric" min="0" max="1000000" step="100" value="3000" required>
+        </div>
+        <div class="field field-toggles">
+          <label class="check"><input id="in-compound" name="compound" type="checkbox"> <span>My bank compounds monthly during the moratorium</span></label>
+          <label class="check"><input id="in-plain" name="plain" type="checkbox"> <span>Plain 1,000s grouping (instead of lakh/crore)</span></label>
+        </div>
+      </form>
+      <p class="hint model-note" id="model-note">Accrual model in use: <strong id="model-label">simple interest (IBA model scheme)</strong>. Figures may differ from your bank's statement — see the honest limits below.</p>
+    </section>
+
+    <!-- ============ VERDICT + CARDS ============ -->
+    <section id="compare" class="wrap" aria-labelledby="compare-h">
+      <h2 id="compare-h"><span class="rule-wedge" aria-hidden="true"></span>The three ways through the moratorium</h2>
+      <p id="verdict" class="verdict" role="status" aria-live="polite"></p>
+      <div class="cards" id="cards">
+        <article class="card card-a" aria-labelledby="card-a-h">
+          <h3 id="card-a-h"><span class="tag tag-a">A</span> Full moratorium <span class="sub">pay nothing during study</span></h3>
+          <dl class="figs">
+            <div><dt>Balance at EMI start</dt><dd id="a-cap" class="num"></dd></div>
+            <div><dt>EMI</dt><dd id="a-emi" class="num"></dd></div>
+            <div><dt>Total interest</dt><dd id="a-int" class="num"></dd></div>
+            <div><dt>Total outflow</dt><dd id="a-out" class="num"></dd></div>
+          </dl>
+          <p class="delta baseline">The do-nothing baseline the other two are measured against.</p>
+          <p class="csis-note" id="a-csis-note" hidden></p>
+        </article>
+        <article class="card card-b" aria-labelledby="card-b-h">
+          <h3 id="card-b-h"><span class="tag tag-b">B</span> Interest served <span class="sub">pay the monthly interest</span></h3>
+          <dl class="figs">
+            <div><dt>Balance at EMI start</dt><dd id="b-cap" class="num"></dd></div>
+            <div><dt>EMI</dt><dd id="b-emi" class="num"></dd></div>
+            <div><dt>Total interest</dt><dd id="b-int" class="num"></dd></div>
+            <div><dt>Total outflow</dt><dd id="b-out" class="num"></dd></div>
+          </dl>
+          <p class="delta" id="b-delta"></p>
+        </article>
+        <article class="card card-c" aria-labelledby="card-c-h">
+          <h3 id="card-c-h"><span class="tag tag-c">C</span> Partial payments <span class="sub" id="c-sub">₹3,000 every month</span></h3>
+          <dl class="figs">
+            <div><dt>Balance at EMI start</dt><dd id="c-cap" class="num"></dd></div>
+            <div><dt>EMI</dt><dd id="c-emi" class="num"></dd></div>
+            <div><dt>Total interest</dt><dd id="c-int" class="num"></dd></div>
+            <div><dt>Total outflow</dt><dd id="c-out" class="num"></dd></div>
+          </dl>
+          <p class="delta" id="c-delta"></p>
+        </article>
+      </div>
+      <p class="hint">Rate is held constant for the whole tenor. Education loans are floating — repo resets will move real figures.</p>
+    </section>
+
+    <!-- ============ TIMELINE ============ -->
+    <section id="timeline" class="wrap" aria-labelledby="timeline-h">
+      <h2 id="timeline-h"><span class="rule-wedge" aria-hidden="true"></span>The moratorium wedge</h2>
+      <p class="section-lede">The hatched gold wedge is interest accruing while nobody pays. At the capitalisation tick it snaps into the balance your EMI is set on — then the three paths run down to zero.</p>
+      <figure class="panel chart-panel">
+        <div id="chart" class="chart" role="img" aria-label="Balance over time for the three scenarios: the full-moratorium path rises through the study years as the interest wedge grows, then all three paths amortise to zero. A text summary follows this chart."></div>
+        <figcaption id="chart-caption" class="chart-caption"></figcaption>
+      </figure>
+    </section>
+
+    <!-- ============ SCHEDULE ============ -->
+    <section id="schedule" class="wrap" aria-labelledby="schedule-h">
+      <h2 id="schedule-h"><span class="rule-wedge" aria-hidden="true"></span>Month-by-month schedule</h2>
+      <div class="sched-controls">
+        <div class="seg" role="group" aria-label="Choose a scenario schedule">
+          <button type="button" class="seg-btn" id="tab-A" aria-pressed="true">A · Full moratorium</button>
+          <button type="button" class="seg-btn" id="tab-B" aria-pressed="false">B · Interest served</button>
+          <button type="button" class="seg-btn" id="tab-C" aria-pressed="false">C · Partial</button>
+        </div>
+        <button type="button" class="btn" id="csv-btn">Download CSV (RFC-4180)</button>
+        <button type="button" class="btn" id="print-btn">Print comparison sheet</button>
+      </div>
+      <div class="panel table-wrap">
+        <table id="sched-table" class="sched">
+          <caption id="sched-caption" class="sr-only">Schedule for the selected scenario: moratorium accrual rows, then amortization rows grouped by year, closing at exactly zero.</caption>
+          <thead>
+            <tr><th scope="col">Month</th><th scope="col">Phase</th><th scope="col" class="num">Opening</th><th scope="col" class="num">Interest</th><th scope="col" class="num">Payment</th><th scope="col" class="num">Principal</th><th scope="col" class="num">Closing</th></tr>
+          </thead>
+          <tbody id="sched-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ 80E ============ -->
+    <section id="tax80e" class="wrap" aria-labelledby="tax80e-h">
+      <h2 id="tax80e-h"><span class="rule-wedge" aria-hidden="true"></span>Section 80E — the interest you actually paid</h2>
+      <div class="panel statute">
+        <blockquote id="s80e-quote" class="statute-quote"></blockquote>
+        <p class="cite" id="s80e-cite"></p>
+        <p class="section-lede">Below are your per-financial-year <strong>interest-paid</strong> figures for the selected scenario — the figure an 80E claim is based on. eduloan computes <strong>no tax-saved rupee number, ever</strong>: the deduction is of interest only, runs at most 8 assessment years, and your bank's interest certificate governs. Conditions apply; this is not tax advice.</p>
+        <div class="table-wrap">
+          <table class="sched fy-table">
+            <caption class="sr-only">Interest paid per Indian financial year (April to March) for the selected scenario</caption>
+            <thead><tr><th scope="col">Financial year</th><th scope="col" class="num">Interest paid</th></tr></thead>
+            <tbody id="fy-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CSIS ============ -->
+    <section id="csis" class="wrap" aria-labelledby="csis-h">
+      <h2 id="csis-h"><span class="rule-wedge" aria-hidden="true"></span>CSIS — could the government bear the moratorium interest?</h2>
+      <div class="panel">
+        <p class="section-lede">The Central Sector Interest Subsidy Scheme pays the moratorium-period interest for eligible accounts. Eligibility is decided by your bank and the Ministry of Education — never by this tool. The cited checklist, verified on the date shown in the rules panel:</p>
+        <ul class="checklist" id="csis-list"></ul>
+        <label class="check csis-declare"><input type="checkbox" id="csis-eligible"> <span>I self-declare that I appear to meet these conditions</span></label>
+        <p class="hint" id="csis-effect">If checked, Scenario A's moratorium interest is <em>annotated</em> as "borne by GoI if approved — confirm with your bank". The math is never changed.</p>
+      </div>
+    </section>
+
+    <!-- ============ SAVED SCENARIOS ============ -->
+    <section id="saved" class="wrap" aria-labelledby="saved-h">
+      <h2 id="saved-h"><span class="rule-wedge" aria-hidden="true"></span>Saved scenarios</h2>
+      <div class="panel">
+        <div class="save-row">
+          <label for="save-name" class="sr-only">Name for this scenario</label>
+          <input id="save-name" type="text" maxlength="40" placeholder="e.g. SBI 9.65% with tranche plan">
+          <button type="button" class="btn" id="save-btn">Save current inputs</button>
+        </div>
+        <ul id="saved-list" class="saved-list"></ul>
+        <p class="hint">Saved only in this browser's localStorage — clearing site data erases them. Print or CSV export is your backup.</p>
+      </div>
+    </section>
+
+    <!-- ============ RULES PANEL ============ -->
+    <section id="rules" class="wrap" aria-labelledby="rules-h">
+      <h2 id="rules-h"><span class="rule-wedge" aria-hidden="true"></span>Every rule this tool leans on, cited</h2>
+      <p class="section-lede">14 facts, each with its clause, source, and the date it was verified. Where the primary portal blocked automated access, the cross-check used is named. Nothing here is invented.</p>
+      <div id="facts-panel" class="facts"></div>
+    </section>
+
+    <!-- ============ HONEST LIMITS ============ -->
+    <section id="limits" class="wrap" aria-labelledby="limits-h">
+      <h2 id="limits-h"><span class="rule-wedge" aria-hidden="true"></span>Honest limits</h2>
+      <ul class="limits panel">
+        <li>Moratorium interest follows the cited IBA model scheme (simple interest); banks may compound monthly or set their own rules. The toggle covers the two common treatments — figures may still differ from your bank's statement.</li>
+        <li>The rate is held constant for the whole tenor. Education loans are floating; repo resets will move real figures.</li>
+        <li>Disbursement is modelled as a lump sum or equal tranches on month boundaries. Real tranches follow fee-demand letters, so accrued interest is an estimate.</li>
+        <li>The 80E card shows the verbatim statute and your interest-paid figures only. Conditions apply; this is not tax advice.</li>
+        <li>CSIS eligibility is decided by the bank and the Ministry of Education, not this tool. Scheme figures were verified on the dates shown and may be amended.</li>
+        <li>Not financial advice. Scenarios live only in this browser's localStorage; print/CSV export is the only backup.</li>
+      </ul>
+    </section>
+
+    <!-- ============ PRINT-ONLY SUMMARY ============ -->
+    <section id="print-sheet" class="wrap print-only" aria-hidden="true">
+      <h2>eduloan — moratorium comparison sheet</h2>
+      <p id="print-assumptions"></p>
+      <div id="print-cards"></div>
+      <p class="print-sources">Sources: IBA Model Education Loan Scheme (via member-bank implementations, verified 2026-07-23) · Section 80E, Income-tax Act, 1961 (verbatim, verified 2026-07-23) · CSIS scheme guidelines, Ministry of Education (verified 2026-07-23). Not financial or tax advice; rate held constant; confirm every figure with your bank.</p>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <p><strong>Disclaimer.</strong> eduloan is an informational calculator, not financial, tax, or investment advice. Moratorium treatment follows the cited IBA model scheme; your bank's sanction letter and statements govern. Section 80E and CSIS facts are quoted from the cited sources as verified on 2026-07-23 and may be amended. Verify every figure with your bank and a qualified professional before acting.</p>
+      <p><strong>Privacy.</strong> This page ships with <code>Content-Security-Policy: connect-src 'none'</code> — the browser itself blocks any network request, so your loan details cannot leave this page. No accounts, no analytics, no cookies; saved scenarios live only in your browser's localStorage.</p>
+      <p class="foot-meta">eduloan v0.1.0 · MIT License · © 2026 Sreenivas Sadhu Prabhakara · <a href="https://github.com/Sreenivas-Sadhu-Prabhakara/eduloan">Source on GitHub</a></p>
+    </div>
+  </footer>
+
+  <script src="data/facts.js"></script>
+  <script src="data/engine.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
